@@ -1,0 +1,6 @@
+flask
+opencv-python
+cmake
+cmaketools
+numpy
+scipy
