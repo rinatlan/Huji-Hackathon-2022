@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        .dot {
+            height: 25px;
+            width: 25px;
+            background-color: red;
+            border-radius: 50%;
+            display: inline-block;
+            position: fixed;
+            top: 38%;
+            left: 49%;
+            /* bring your own prefixes */
+        }
+    </style>
+</head>
+<body>
+<video autoplay muted loop id="dot_vid">
+  <source src="../static/images/dot_vid.mp4" type="video/mp4">
+</video>
+<style>
+#dot_vid {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}
+</style>
+
+<div style="text-align:center">
+    <span class="dot"></span>
+
+</div>
+
+</body>
+</html>
+
+<script>
+    let i = 0;
+    function polling() {
+        {#I don't know what I'm doing from here on#}
+        const xhr = new XMLHttpRequest();
+        xhr.open('GET', "isValid", true);
+        xhr.onreadystatechange = function () {
+            // In local files, status is 0 upon success in Mozilla Firefox
+            if (xhr.readyState === XMLHttpRequest.DONE) {
+                var status = xhr.status;
+                if (status === 0 || (status == 302 && i >= 1)) {
+                    // The request has been completed successfully
+                    console.log(xhr.responseText);
+                    window.location = "failure"
+                } else if (status == 302) {
+                    i++;
+                    console.log(i);
+                } else {
+                    // Oh no! There has been an error with the request!
+                }
+            }
+        };
+        xhr.send()
+    }
+
+    let myVar
+    let counter = 0
+
+    function stopFunction() {
+        clearInterval(myVar); // stop the timer
+    }
+
+    myVar = window.setInterval(polling, 1000);
+    var timeLeft = 8;
+    var timerId = setInterval(countdown, 1000);
+
+    function countdown() {
+        if (timeLeft == -1) {
+            clearTimeout(timerId);
+            window.location = "success"
+        } else {
+            timeLeft--;
+        }
+    }
+</script>
